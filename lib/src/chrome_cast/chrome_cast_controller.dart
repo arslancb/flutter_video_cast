@@ -58,6 +58,10 @@ class ChromeCastController {
     return _chromeCastPlatform.isConnected(id: id);
   }
 
+  Future<String> getConnectedDevice() {
+    return _chromeCastPlatform.getConnectedDevice(id: id);
+  }
+
   /// Returns `true` when a cast session is playing, `false` otherwise.
   Future<bool> isPlaying() {
     return _chromeCastPlatform.isPlaying(id: id);

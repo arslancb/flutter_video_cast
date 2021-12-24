@@ -106,6 +106,11 @@ class MethodChannelChromeCast extends ChromeCastPlatform {
   }
 
   @override
+  Future<String> getConnectedDevice({@required int id}) {
+    return channel(id).invokeMethod<String>('chromeCast#getConnectedDevice');
+  }
+
+  @override
   Future<bool> isPlaying({@required int id}) {
     return channel(id).invokeMethod<bool>('chromeCast#isPlaying');
   }

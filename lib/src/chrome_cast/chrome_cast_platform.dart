@@ -82,7 +82,11 @@ abstract class ChromeCastPlatform {
 
   /// Returns `true` when a cast session is connected, `false` otherwise.
   Future<bool> isConnected({@required int id}) {
-    throw UnimplementedError('seek() has not been implemented.');
+    throw UnimplementedError('isConnected() has not been implemented.');
+  }
+
+  Future<String> getConnectedDevice({@required int id}) {
+    throw UnimplementedError('getConnectedDevice() has not been implemented.');
   }
 
   /// Returns `true` when a cast session is playing, `false` otherwise.

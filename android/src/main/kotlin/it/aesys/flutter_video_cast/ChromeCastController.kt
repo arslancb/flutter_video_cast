@@ -72,6 +72,8 @@ class ChromeCastController(
 
     private fun isConnected() = sessionManager?.currentCastSession?.isConnected ?: false
 
+    private fun getConnectedDevice() = sessionManager?.currentCastSession?.castDevice?.friendlyName ?: null
+
     private fun addSessionListener() {
         sessionManager?.addSessionManagerListener(this)
     }
@@ -113,6 +115,7 @@ class ChromeCastController(
             }
             "chromeCast#isPlaying" -> result.success(isPlaying())
             "chromeCast#isConnected" -> result.success(isConnected())
+            "chromeCast#getConnectedDevice" -> result.success(getConnectedDevice())
             "chromeCast#addSessionListener" -> {
                 addSessionListener()
                 result.success(null)

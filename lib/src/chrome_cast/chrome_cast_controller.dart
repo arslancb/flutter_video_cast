@@ -9,6 +9,11 @@ class ChromeCastController {
 
   ChromeCastController._({@required this.id});
 
+  Map<StreamType, int> streamTypes = {
+    StreamType.Live: 2,
+    StreamType.Buffered: 1,
+  };
+
   /// Initialize control of a [ChromeCastButton] with [id].
   static Future<ChromeCastController> init(int id) async {
     assert(id != null);
@@ -27,8 +32,8 @@ class ChromeCastController {
   }
 
   /// Load a new media by providing an [url].
-  Future<void> loadMedia(String url) {
-    return _chromeCastPlatform.loadMedia(url, id: id);
+  Future<void> loadMedia(String url, StreamType streamType) {
+    return _chromeCastPlatform.loadMedia(url, streamTypes[streamType], id: id);
   }
 
   /// Plays the video playback.
@@ -67,3 +72,5 @@ class ChromeCastController {
     return _chromeCastPlatform.isPlaying(id: id);
   }
 }
+
+enum StreamType { Live, Buffered }

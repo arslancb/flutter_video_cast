@@ -104,7 +104,9 @@ class _CastSampleState extends State<CastSample> {
   Future<void> _onSessionStarted() async {
     setState(() => _state = AppState.connected);
     await _controller.loadMedia(
-        'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4');
+      'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+      StreamType.Buffered,
+    );
     print(await _controller.getConnectedDevice());
   }
 

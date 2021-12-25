@@ -31,6 +31,11 @@ class ChromeCastController {
     return _chromeCastPlatform.removeSessionListener(id: id);
   }
 
+  /// Disconnects current session.
+  Future<void> endSession() {
+    return _chromeCastPlatform.endSession(id: id);
+  }
+
   /// Load a new media by providing an [url].
   Future<void> loadMedia(String url, StreamType streamType) {
     return _chromeCastPlatform.loadMedia(url, streamTypes[streamType], id: id);
@@ -63,6 +68,7 @@ class ChromeCastController {
     return _chromeCastPlatform.isConnected(id: id);
   }
 
+  /// Returns `Connected Device Name` when a cast session is connected.
   Future<String> getConnectedDevice() {
     return _chromeCastPlatform.getConnectedDevice(id: id);
   }

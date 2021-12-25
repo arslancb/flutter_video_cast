@@ -30,6 +30,11 @@ abstract class ChromeCastPlatform {
         'removeSessionListener() has not been implemented.');
   }
 
+  /// Disconnects current session.
+  Future<void> endSession({@required int id}) {
+    throw UnimplementedError('endSession() has not been implemented.');
+  }
+
   /// A session is started.
   Stream<SessionStartedEvent> onSessionStarted({@required int id}) {
     throw UnimplementedError('onSessionStarted() has not been implemented.');

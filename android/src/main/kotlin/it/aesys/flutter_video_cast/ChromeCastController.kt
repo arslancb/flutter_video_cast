@@ -83,6 +83,10 @@ class ChromeCastController(
         sessionManager?.removeSessionManagerListener(this)
     }
 
+    private fun endSession() {
+        sessionManager?.endCurrentSession(true)
+    }
+
     override fun getView() = chromeCastButton
 
     override fun dispose() {
@@ -123,6 +127,10 @@ class ChromeCastController(
             }
             "chromeCast#removeSessionListener" -> {
                 removeSessionListener()
+                result.success(null)
+            }
+            "chromeCast#endSession" -> {
+                endSession()
                 result.success(null)
             }
         }

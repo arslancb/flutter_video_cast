@@ -23,6 +23,7 @@ class _CastSampleState extends State<CastSample> {
   ChromeCastController _controller;
   AppState _state = AppState.idle;
   bool _playing = false;
+  String castDeviceName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -68,20 +69,32 @@ class _CastSampleState extends State<CastSample> {
   }
 
   Widget _mediaControls() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        _RoundIconButton(
-          icon: Icons.replay_10,
-          onPressed: () => _controller.seek(relative: true, interval: -10.0),
+    return Column(
+      children: [
+        Text(castDeviceName),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _RoundIconButton(
+              icon: Icons.replay_10,
+              onPressed: () =>
+                  _controller.seek(relative: true, interval: -10.0),
+            ),
+            _RoundIconButton(
+                icon: _playing ? Icons.pause : Icons.play_arrow,
+                onPressed: _playPause),
+            _RoundIconButton(
+              icon: Icons.forward_10,
+              onPressed: () => _controller.seek(relative: true, interval: 10.0),
+            )
+          ],
         ),
-        _RoundIconButton(
-            icon: _playing ? Icons.pause : Icons.play_arrow,
-            onPressed: _playPause),
-        _RoundIconButton(
-          icon: Icons.forward_10,
-          onPressed: () => _controller.seek(relative: true, interval: 10.0),
-        )
+        TextButton(
+          onPressed: () {
+            _controller.endSession();
+          },
+          child: Text('Disconnect'),
+        ),
       ],
     );
   }
@@ -112,6 +125,7 @@ class _CastSampleState extends State<CastSample> {
 
   Future<void> _onRequestCompleted() async {
     final playing = await _controller.isPlaying();
+    castDeviceName = await _controller.getConnectedDevice();
     setState(() {
       _state = AppState.mediaLoaded;
       _playing = playing;

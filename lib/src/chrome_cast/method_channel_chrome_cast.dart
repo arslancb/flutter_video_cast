@@ -51,6 +51,11 @@ class MethodChannelChromeCast extends ChromeCastPlatform {
   }
 
   @override
+  Future<void> endSession({int id}) {
+    return channel(id).invokeMethod<void>('chromeCast#endSession');
+  }
+
+  @override
   Stream<SessionStartedEvent> onSessionStarted({int id}) {
     return _events(id).whereType<SessionStartedEvent>();
   }

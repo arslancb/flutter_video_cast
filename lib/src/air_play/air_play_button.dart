@@ -6,12 +6,12 @@ final AirPlayPlatform _airPlayPlatform = AirPlayPlatform.instance;
 class AirPlayButton extends StatelessWidget {
   /// Creates a widget displaying a AirPlay button.
   AirPlayButton({
-    Key key,
+    Key? key,
     this.size = 30.0,
     this.color = Colors.black,
     this.activeColor = Colors.white,
-    this.onRoutesOpening,
-    this.onRoutesClosed,
+    required this.onRoutesOpening,
+    required this.onRoutesClosed,
   }) : super(key: key);
 
   /// The size of the button.

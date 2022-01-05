@@ -12,16 +12,16 @@ typedef void OnRequestFailed(String error);
 /// Widget that displays the ChromeCast button.
 class ChromeCastButton extends StatelessWidget {
   /// Creates a widget displaying a ChromeCast button.
-  ChromeCastButton(
-      {Key key,
-      this.size = 30.0,
-      this.color = Colors.black,
-      this.onButtonCreated,
-      this.onSessionStarted,
-      this.onSessionEnded,
-      this.onRequestCompleted,
-      this.onRequestFailed})
-      : assert(
+  ChromeCastButton({
+    Key? key,
+    this.size = 30.0,
+    this.color = Colors.black,
+    required this.onButtonCreated,
+    required this.onSessionStarted,
+    required this.onSessionEnded,
+    required this.onRequestCompleted,
+    required this.onRequestFailed,
+  })  : assert(
             defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.android,
             '$defaultTargetPlatform is not supported by this plugin'),

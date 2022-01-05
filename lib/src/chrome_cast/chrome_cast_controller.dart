@@ -7,7 +7,7 @@ class ChromeCastController {
   /// The id for this controller
   final int id;
 
-  ChromeCastController._({@required this.id});
+  ChromeCastController._({required this.id});
 
   Map<StreamType, int> streamTypes = {
     StreamType.Live: 2,
@@ -38,7 +38,7 @@ class ChromeCastController {
 
   /// Load a new media by providing an [url].
   Future<void> loadMedia(String url, StreamType streamType) {
-    return _chromeCastPlatform.loadMedia(url, streamTypes[streamType], id: id);
+    return _chromeCastPlatform.loadMedia(url, streamTypes[streamType]!, id: id);
   }
 
   /// Plays the video playback.
@@ -64,17 +64,17 @@ class ChromeCastController {
   }
 
   /// Returns `true` when a cast session is connected, `false` otherwise.
-  Future<bool> isConnected() {
+  Future<bool?> isConnected() {
     return _chromeCastPlatform.isConnected(id: id);
   }
 
   /// Returns `Connected Device Name` when a cast session is connected.
-  Future<String> getConnectedDevice() {
+  Future<String?> getConnectedDevice() {
     return _chromeCastPlatform.getConnectedDevice(id: id);
   }
 
   /// Returns `true` when a cast session is playing, `false` otherwise.
-  Future<bool> isPlaying() {
+  Future<bool?> isPlaying() {
     return _chromeCastPlatform.isPlaying(id: id);
   }
 }

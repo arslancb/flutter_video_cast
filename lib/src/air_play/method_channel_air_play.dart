@@ -15,7 +15,7 @@ class MethodChannelAirPlay extends AirPlayPlatform {
 
   /// Accesses the MethodChannel associated to the passed id.
   MethodChannel channel(int id) {
-    return _channels[id];
+    return _channels[id]!;
   }
 
   // The controller we need to broadcast the different events coming
@@ -31,22 +31,22 @@ class MethodChannelAirPlay extends AirPlayPlatform {
 
   @override
   Future<void> init(int id) {
-    MethodChannel channel;
+    MethodChannel? channel;
     if (!_channels.containsKey(id)) {
       channel = MethodChannel('flutter_video_cast/airPlay_$id');
       channel.setMethodCallHandler((call) => _handleMethodCall(call, id));
       _channels[id] = channel;
     }
-    return channel.invokeMethod<void>('airPlay#wait');
+    return channel!.invokeMethod<void>('airPlay#wait');
   }
 
   @override
-  Stream<RoutesOpeningEvent> onRoutesOpening({@required int id}) {
+  Stream<RoutesOpeningEvent> onRoutesOpening({required int id}) {
     return _events(id).whereType<RoutesOpeningEvent>();
   }
 
   @override
-  Stream<RoutesClosedEvent> onRoutesClosed({@required int id}) {
+  Stream<RoutesClosedEvent> onRoutesClosed({required int id}) {
     return _events(id).whereType<RoutesClosedEvent>();
   }
 

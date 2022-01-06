@@ -120,12 +120,18 @@ class ChromeCastController: NSObject, FlutterPlatformView {
         guard
             let args = args as? [String: Any],
             let url = args["url"] as? String,
-            let streamTypeEnum = args["streamType"] as Int,
+            let streamTypeEnum = args["streamType"] as? Int,
             let mediaUrl = URL(string: url) else {
                 print("Invalid URL")
                 return
         }
-        let mediaInformation = GCKMediaInformationBuilder(contentURL: mediaUrl, streamType: streamTypeEnum).build()
+        let mediaBuilder = GCKMediaInformationBuilder(contentURL: mediaUrl)
+        if (streamTypeEnum == 2) {
+            mediaBuilder.streamType = .live
+        } else {
+            mediaBuilder.streamType = .buffered
+        }
+        let mediaInformation = mediaBuilder.build()
         if let request = sessionManager.currentCastSession?.remoteMediaClient?.loadMedia(mediaInformation) {
             request.delegate = self
         }
@@ -169,7 +175,7 @@ class ChromeCastController: NSObject, FlutterPlatformView {
     }
     
     private func getConnectedDevice() -> String {
-        return sessionManager.currentCastSession?.device?.friendlyName ?? "External Device"
+        return sessionManager.currentCastSession?.device.friendlyName ?? "External Device"
     }
 
     private func isPlaying() -> Bool {
@@ -184,10 +190,8 @@ class ChromeCastController: NSObject, FlutterPlatformView {
         sessionManager.remove(self)
     }
 
-    private fun endSession() {
-        if let request = sessionManager.endSession() {
-            request.delegate = self
-        }
+    private func endSession() {
+        sessionManager.endSession()
     }
 }
 

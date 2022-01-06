@@ -34,7 +34,7 @@ class ChromeCastController(
         if (args is Map<*, *>) {
             val url = args["url"] as? String
             val streamType = args["streamType"] as Int
-            val media = MediaInfo.Builder(url).setStreamType(streamType) .build()
+            val media = MediaInfo.Builder(url).setStreamType(streamType).build()
             val options = MediaLoadOptions.Builder().build()
             val request = sessionManager?.currentCastSession?.remoteMediaClient?.load(media, options)
             request?.addStatusListener(this)
@@ -73,7 +73,7 @@ class ChromeCastController(
 
     private fun isConnected() = sessionManager?.currentCastSession?.isConnected ?: false
 
-    private fun getConnectedDevice() = sessionManager?.currentCastSession?.castDevice?.friendlyName ?: null
+    private fun getConnectedDevice() = sessionManager?.currentCastSession?.castDevice?.friendlyName ?: "External Device"
 
     private fun addSessionListener() {
         sessionManager?.addSessionManagerListener(this)

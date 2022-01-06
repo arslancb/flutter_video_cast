@@ -95,6 +95,9 @@ class ChromeCastController: NSObject, FlutterPlatformView {
         case "chromeCast#isConnected":
             result(isConnected())
             break
+        case "chromeCast#getConnectedDevice":
+            result(getConnectedDevice())
+            break
         case "chromeCast#isPlaying":
             result(isPlaying())
             break
@@ -103,6 +106,9 @@ class ChromeCastController: NSObject, FlutterPlatformView {
             result(nil)
         case "chromeCast#removeSessionListener":
             removeSessionListener()
+            result(nil)
+        case "chromeCast#endSession":
+            endSession()
             result(nil)
         default:
             result(nil)
@@ -114,11 +120,12 @@ class ChromeCastController: NSObject, FlutterPlatformView {
         guard
             let args = args as? [String: Any],
             let url = args["url"] as? String,
+            let streamTypeEnum = args["streamType"] as Int,
             let mediaUrl = URL(string: url) else {
                 print("Invalid URL")
                 return
         }
-        let mediaInformation = GCKMediaInformationBuilder(contentURL: mediaUrl).build()
+        let mediaInformation = GCKMediaInformationBuilder(contentURL: mediaUrl, streamType: streamTypeEnum).build()
         if let request = sessionManager.currentCastSession?.remoteMediaClient?.loadMedia(mediaInformation) {
             request.delegate = self
         }
@@ -160,6 +167,10 @@ class ChromeCastController: NSObject, FlutterPlatformView {
     private func isConnected() -> Bool {
         return sessionManager.currentCastSession?.remoteMediaClient?.connected ?? false
     }
+    
+    private func getConnectedDevice() -> String {
+        return sessionManager.currentCastSession?.device?.friendlyName ?? "External Device"
+    }
 
     private func isPlaying() -> Bool {
         return sessionManager.currentCastSession?.remoteMediaClient?.mediaStatus?.playerState == GCKMediaPlayerState.playing
@@ -171,6 +182,12 @@ class ChromeCastController: NSObject, FlutterPlatformView {
 
     private func removeSessionListener() {
         sessionManager.remove(self)
+    }
+
+    private fun endSession() {
+        if let request = sessionManager.endSession() {
+            request.delegate = self
+        }
     }
 }
 
